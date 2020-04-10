@@ -108,7 +108,7 @@ class AmazonPrimeNow(webdriver.Chrome):
         msg["To"] = recipients
         msg.attach(MIMEText(message, "plain"))
         msg.attach(MIMEText(avail_df.to_string(), "plain"))
-        session = smtplib.SMTP("mail.factset.com")
+        session = smtplib.SMTP("mail.xxxxx.com")
         session.sendmail(sender_email, receiver_email, msg.as_string())
         session.quit()
 
