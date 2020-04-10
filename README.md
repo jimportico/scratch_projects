@@ -1,2 +1,3 @@
-# scratch_projects
-Scratch Projects
+# Scratch Projects
+
+Storing project work here.
