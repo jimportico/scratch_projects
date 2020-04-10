@@ -97,7 +97,7 @@ class AmazonPrimeNow(webdriver.Chrome):
             print("No times available.\n\n", e)
 
     def email_alert(self, message=None, recipients=None, avail_df=None):
-        sender_email = "jimportico@factset.com"
+        sender_email = "xxxxx@xxxx.com"
         all_recipients = []
         for i in recipients:
             all_recipients.append(i)
