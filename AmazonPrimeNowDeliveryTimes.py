@@ -129,17 +129,18 @@ if __name__ == "__main__":
     amzn.open_site()
     amzn.sign_in(amazon_un=amazon_un, amazon_pw=amazon_pw)
     amzn.check_out()
-
+    df = amzn.check_availability()
+    
     while True:
         # Execute email trigger
-        # ---------------------
+        # -------------------
         if df is not None:
             amzn.email_alert(message=message, recipients=recipients, avail_df=df)
         else:
             print("No times available - no email sent.")
 
         # Keeping Track & Ending Routine
-        # ------------------------------
+        # -------------------------
         print(f"Executing loop {counter}...")
         sleep_time = num_min * 60
         time.sleep(sleep_time)
