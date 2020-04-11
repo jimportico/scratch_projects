@@ -108,7 +108,7 @@ class AmazonPrimeNow(webdriver.Chrome):
         msg.attach(MIMEText(message, "plain"))
         msg.attach(MIMEText(avail_df.to_string(), "plain"))
         session = smtplib.SMTP("mail.xxxxx.com")
-        session.sendmail(sender_email, receiver_email, msg.as_string())
+        session.sendmail(sender_email, recipients, msg.as_string())
         session.quit()
 
 
@@ -117,7 +117,7 @@ class AmazonPrimeNow(webdriver.Chrome):
 amazon_un = "xxxx"
 amazon_pw = "xxxx"
 
-message = "YO! Your food is ready"
+message = "Your food is ready"
 recipients = ["xxxx", "xxxx"]
 
 counter = 0
@@ -129,18 +129,23 @@ if __name__ == "__main__":
     amzn.open_site()
     amzn.sign_in(amazon_un=amazon_un, amazon_pw=amazon_pw)
     amzn.check_out()
-    df = amzn.check_availability()
     
     while True:
+        # Refresh page
+        # ------------
+        amzn.refresh()
+        # Store delivery times to df
+        # --------------------------
+        df = amzn.check_availability()
         # Execute email trigger
-        # -------------------
+        # ---------------------
         if df is not None:
             amzn.email_alert(message=message, recipients=recipients, avail_df=df)
         else:
             print("No times available - no email sent.")
 
         # Keeping Track & Ending Routine
-        # -------------------------
+        # ------------------------------
         print(f"Executing loop {counter}...")
         sleep_time = num_min * 60
         time.sleep(sleep_time)
