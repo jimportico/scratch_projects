@@ -2,7 +2,6 @@ import os
 import time 
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -70,7 +69,7 @@ class AmazonPrimeNow(webdriver.Chrome):
         return stripped_times
 
     def _enumerate_time(self, strip_times):
-        enum_times = [(x, y) for x, y in enumerate(stripped_times)]
+        enum_times = [(x, y) for x, y in enumerate(strip_times)]
         return enum_times
 
     def check_availability(self):
@@ -115,20 +114,35 @@ class AmazonPrimeNow(webdriver.Chrome):
 
 # Kick off script
 # ---------------
-amazon_un = "xxxxx@xxxx.com"
-amazon_pw = "xxxxx"
+amazon_un = "xxxx"
+amazon_pw = "xxxx"
 
-message = "Your food is ready."
-recipients = ["xxxx@xxxx.com", "xxxx@xxxx.com"]
+message = "YO! Your food is ready"
+recipients = ["xxxx", "xxxx"]
+
+counter = 0
+num_min = 30        # How often we'd like to check Amazon for available times
+run_time_hrs = 5    # Total run time in hours
 
 if __name__ == "__main__":
     amzn = AmazonPrimeNow(browser="Chrome")
     amzn.open_site()
     amzn.sign_in(amazon_un=amazon_un, amazon_pw=amazon_pw)
     amzn.check_out()
-    df = amzn.check_availability()
 
-    if df is not None:
-        amzn.email_alert(message=message, recipients=recipients, avail_df=df)
-    else:
-        print("No times available - no email sent.")
+    while True:
+        # Execute email trigger
+        # ---------------------
+        if df is not None:
+            amzn.email_alert(message=message, recipients=recipients, avail_df=df)
+        else:
+            print("No times available - no email sent.")
+
+        # Keeping Track & Ending Routine
+        # ------------------------------
+        print(f"Executing loop {counter}...")
+        sleep_time = num_min * 60
+        time.sleep(sleep_time)
+        counter += 1
+        if counter > run_time_hrs:
+            break
