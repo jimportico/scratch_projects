@@ -2,6 +2,7 @@
 .venv/
 .env
 .env.*
+!.env.example
 
 # Python
 __pycache__/
@@ -14,3 +15,17 @@ __pycache__/
 # OS / editor
 .DS_Store
 .vscode/
+
+# Kaggle credentials
+kaggle.json
+.kaggle/
+**/kaggle.json 
+
+# Kaggle competition data 
+data/ 
+*.csv
+*.zip
+
+# Kaggle submissions
+submissions/
+submission*.csv
